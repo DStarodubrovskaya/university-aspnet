@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "TZhzPHuoapA=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\dstpo\\source\\repos\\LibraryWebApplication\\LibraryWebApplication.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\dstpo\\.nuget\\packages\\csvhelper\\33.0.1\\csvhelper.33.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

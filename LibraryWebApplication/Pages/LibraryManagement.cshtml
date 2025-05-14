@@ -1,0 +1,73 @@
+﻿@page
+@using LibraryWebApplication.Models
+@model LibraryWebApplication.Pages.LibraryManagementModel
+<style>
+	form label {
+		display: inline-block;
+		width: 100px;
+		margin-bottom: 5px;
+	}
+
+	form input {
+		width: 200px;
+		padding: 5px;
+		margin-bottom: 5px;
+	}
+
+	form button {
+		margin-top: 5px;
+	}
+</style>
+
+<div class="text-center">
+	<div>
+		<form method="post" asp-page-handler="search">
+			<label asp-for="Identifier">Book Name or ID</label>
+			<input type="text" asp-for="Identifier" required />
+			<br />
+			<button type="submit">Search</button>
+			<br />
+			<!--Here wiil go the result of the search-->
+		</form>
+	</div>
+	<br />
+	<div>
+		<form method="post" asp-page-handler="insert">
+			<label asp-for="Id">Book ID</label>
+			<input type="text" asp-for="Id" required />
+			<br />
+			<label asp-for="Title">Book Name</label>
+			<input type="text" asp-for="Title" required />
+			<br />
+			<label asp-for="Author">Book Author</label>
+			<input type="text" asp-for="Author" required />
+			<br />
+			<button type="submit">Insert</button>
+			<br />
+			<!--Here wiil go the result of the insert-->
+		</form>
+	</div>
+	<br />
+	<div>
+		<form method="post" asp-page-handler="delete">
+			<label asp-for="Id">Book ID</label>
+			<input type="text" asp-for="Id" required />
+			<br />
+			<button type="submit">Delete</button>
+			<br />
+			<!--Here wiil go the result of the delete-->
+		</form>
+	</div>
+	<br />
+	<p><a href="/LibraryManagement" class="btn btn-default">Clear All</a></p>
+</div>
+<hr />
+<div>
+	<h4>@TempData["FormResult"]</h4>
+	<ul>
+		@foreach (string title in Model.TitlesMatchedStr) 
+		{
+			<li>@title</li>
+		}
+	</ul>
+</div>
