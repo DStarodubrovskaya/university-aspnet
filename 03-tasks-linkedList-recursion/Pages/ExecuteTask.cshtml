@@ -1,0 +1,39 @@
+﻿@page "{id}"
+@model TaskSchedulerDariaSt.Pages.ExecuteTaskModel
+<div style="max-width:400px; margin:40px auto; text-align:center;">
+    <h2 style ="text-align:center; margin:16px 0 24px; font-weight:700;">
+        Task Execution
+    </h2>
+
+    @if (Model.taskItem is null)
+    {
+        <p>Task not found.</p>
+    }
+    else
+    {
+        <h3 style="margin-top:0">@Model.taskItem.Name</h3>
+        <p><strong>Description:</strong> @Model.taskItem.Description</p>
+        <p>
+            <strong>Priority:</strong>
+            @(Model.taskItem.Priority == 1 ? "High" :
+                        Model.taskItem.Priority == 2 ? "Medium" : "Low")
+        </p>
+        <p><strong>Estimated Time:</strong> @Model.taskItem.EstimatedTime sec</p>
+       
+
+        <!-- Submit Button to Activate Execution -->
+        <form method="post" asp-page-handler="Execute" style="margin-top:16px;">
+            <input type="hidden" name="id" value="@Model.taskItem.Id" />
+            <!-- Button is protected from the second POST call while executing  -->
+            <button onclick="this.disabled=true; this.form.submit();" style="padding:6px 12px; border:1px solid #2e7d32; background:#2e7d32; color:#fff; border-radius:6px; border:none; cursor:pointer;">
+                Start Execution
+            </button>
+        </form>
+    }
+    <!-- Back to Tasks button -->
+    <div style="margin-top:12px;">
+        <a href="/ManageTasks" style="padding:6px 12px; border-radius:4px; color:#1e66f5;">
+                Cancel
+        </a>
+    </div>
+</div>

@@ -1,0 +1,127 @@
+﻿@page
+@model TaskSchedulerDariaSt.Pages.ManageTasksModel
+
+@if (!string.IsNullOrEmpty(Model.ExecuteResult))
+{
+	<script>
+		alert("@Model.ExecuteResult");
+	</script>
+}
+<!-- User greetings, prevents nullable currentUser -->
+<div style ="text-align:center; margin:16px 0 24px; font-weight:600;">
+	<h3>Hello, <strong>@(Model.currentUser?.UserName ?? "Guest")</strong>!</h3>
+	<h2>What would you like to do?</h2>
+</div>
+
+
+
+<div style="display:grid; grid-template-columns:2fr 1fr 1fr; gap:24px; max-width:1100px; margin:0 auto;">
+	
+	<!-- Left side: Display tasks -->
+	<div style ="padding:8px;">
+		<h3 style="margin-top:0">Display Tasks</h3>
+		
+		<!-- Filter tasks by priority -->
+		<form method="post" asp-page-handler="Filter" style="margin-bottom:12px;">
+			<label asp-for="priorityFilter" style="font-weight:600;">Select Priority</label>
+			<select asp-for="priorityFilter"
+					style="padding:4px; border:1px solid #ccc; margin-bottom:6px;">
+				<option value="0">All</option>
+				<option value="3">Low</option>
+				<option value="2">Medium</option>
+				<option value="1">High</option>
+			</select>
+			<!-- Search button -->
+			<button style="padding:4px 8px; background:#1e66f5; color:#fff; border-radius:4px; border:none; cursor:pointer;">
+				Filter Tasks
+			</button>
+		</form>
+
+		<!-- Task list -->
+		@if (Model.Tasks != null && Model.Tasks.Count > 0)
+		{
+			<ul style="margin:0; padding-left:18px;">
+				@foreach (var task in Model.Tasks)
+				{
+					<li style="margin-bottom:6px;">
+						<!-- GTP help: To display Priority as words and not numbers -->
+						<strong>@task.Name</strong> — @task.Description
+						(Priority:
+						@(task.Priority == 1 ? "High" :
+										task.Priority == 2 ? "Medium" :
+										"Low"),
+						Time: @task.EstimatedTime sec)
+						<!-- Execute function -->
+						<a asp-page="ExecuteTask" asp-route-id="@task.Id" style="display:inline; margin-left:6px;">
+							Execute
+						</a>
+					</li>
+				}
+			</ul>
+		}
+		else
+		{
+			<p>No tasks available.</p>
+		}
+	</div>
+
+	<!-- Center: Add task -->
+	<div style="padding:8px;">
+		<h3 style="margin-top:0">Add Task</h3>
+		<form method="post" asp-page-handler="Add">
+			<label asp-for="taskItem.Name" style="display:block; margin-bottom:2px; font-weight:600;"></label>
+			<input asp-for="taskItem.Name" type="text" required />
+
+			<label asp-for="taskItem.Description" style="display:block; margin-bottom:2px; font-weight:600;"></label>
+			<input asp-for="taskItem.Description" type="text" required />
+			
+			<label asp-for="taskItem.EstimatedTime" style="display:block; margin-bottom:2px; font-weight:600;">Time (in sec)</label>
+			<input asp-for="taskItem.EstimatedTime" type="number" required />
+			
+			<label asp-for="taskItem.Priority" style="display:block; margin-bottom:2px; font-weight:600;">Select Priority</label>
+			<select asp-for="taskItem.Priority" required>
+				<option value="3">Low</option>
+				<option value="2">Medium</option>
+				<option value="1">High</option>
+			</select>
+
+			<button style="padding:4px 8px; background:#1e66f5; color:#fff; border-radius:6px; border:none; cursor:pointer;">
+				Add Task
+			</button>
+		</form>
+		<!-- Result message after adding -->
+		<p>@TempData["AddResult"]</p>
+	</div>
+
+	<!-- Right side: Delete task -->
+	<div style="padding:8px;">
+		<h3 style="margin-top:0">Delete Task</h3>
+		<form method="post" asp-page-handler="Delete">
+			<select asp-for="taskItem.Name" asp-items="@(new SelectList(Model.UniqueTaskNames))" required>
+				<option value="" selected disabled>Pick One</option>
+			</select>
+			<button style="padding:4px 8px; background:#e53935; color:#fff; border-radius:6px; border:none; cursor:pointer;">
+				Delete Task
+			</button>
+		</form>
+		<!-- Result message after deletion -->
+		<p>@TempData["DeleteResult"]</p>
+		
+		<!-- Total time -->
+		<form method="post" asp-page-handler="GetTime" style="margin-bottom:12px;">
+			<button style="padding:6px 10px; background:#1e66f5; color:#fff; border-radius:6px; border:none; cursor:pointer;">
+				Show Estimated Time
+			</button>
+		</form>
+		<!-- Result message with Time -->
+		<p>@TempData["TimeResult"]</p>
+	</div>
+
+</div>
+
+<!-- Back to main menu button -->
+<div style="text-align:center; margin-top:12px;">
+	<a href="/Index" style="padding:6px 12px; border-radius:4px; color:#1e66f5;">
+		Back to Main Menu
+	</a>
+</div>

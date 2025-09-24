@@ -1,0 +1,47 @@
+﻿@page
+@model TaskSchedulerDariaSt.Pages.AddUserModel
+
+<div style="display:flex; justify-content:center; gap:40px; margin-top:40px;">
+
+	<div style="padding:8px;">
+		<!-- Add User -->
+		<form method="post" asp-page-handler="Add" style="display:flex; flex-direction:column; gap:10px; text-align:left;">
+			<h2 style="text-align:center;">Add User</h2>
+			<label asp-for="user.UserName" style="font-weight:600;">User Name</label>
+			<input asp-for="user.UserName" style="padding:6px; border:1px solid #ccc; border-radius:6px;" required />
+
+			<button type="submit" style="padding:4px 12px; background:#2e7d32; color:#fff; border-radius:6px; border:none; cursor:pointer;">
+				Add User
+			</button>
+		</form>
+
+		<p>@TempData["AddUserResult"]</p>
+	</div>
+	<div style="padding:8px;">
+		<!-- Delete user -->
+		<form method="post" asp-page-handler="Delete" style="display:flex; flex-direction:column; gap:10px; width:220px;">
+			<h2 style="text-align:center;">Delete User</h2>
+			<label asp-for="user.Id" style="font-weight:600;">User Name</label>
+			<select asp-for="user.Id" required style="padding:6px; border:1px solid #ccc; border-radius:6px;">
+				<option value="" selected disabled>Pick One</option>
+				@foreach (var user in Model.Users)
+				{
+					<option value="@user.Id">@user.UserName</option>
+				}
+			</select>
+
+			<button type="submit" style="padding:4px 12px; background:#e53935; color:#fff; border-radius:6px; border:none; cursor:pointer;">
+				Delete User
+			</button>
+		</form>
+		<!-- Result message after deletion -->
+		<p>@TempData["DeleteUserResult"]</p>
+	</div>
+</div>
+
+    <div style="text-align:center; margin-top:12px;">
+	<a href="/Index" style="padding:6px 12px; border-radius:4px; color:#1e66f5;">
+            Back to Main Menu
+        </a>
+    </div>
+</div>
