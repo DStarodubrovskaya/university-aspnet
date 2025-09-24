@@ -1,0 +1,14 @@
+# dotnet
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.DotSettings.user
+
+# caches
+*.dtbcache*
+
+# local secrets
+appsettings.*.local.json
+appsettings.Development.json
