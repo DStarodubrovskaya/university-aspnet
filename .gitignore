@@ -10,5 +10,6 @@ obj/
 *.dtbcache*
 
 # local secrets
+appsettings.json
 appsettings.*.local.json
 appsettings.Development.json

@@ -1,0 +1,84 @@
+﻿@page
+@model TaskManagerDariaSt.Pages.TasksModel
+<h1 class="text-center mb-4">Manage Tasks</h1>
+<div class="d-flex justify-content-center flex-wrap gap-5">
+	<!-- Left side: Add and Display -->
+	<div class="d-flex flex-column gap-3" style="min-width: 300px;">
+
+		<!-- Form to add new task -->
+		<h3>Add Task</h3>
+		<form method="post" asp-page-handler="Add" class="d-flex flex-column gap-2">
+			<label asp-for="taskItem.Title"></label>
+			<input asp-for="taskItem.Title" type="text" class="form-control form-control-sm" required />
+			
+			<label asp-for="taskItem.Description"></label>
+			<input asp-for="taskItem.Description" type="text" class="form-control form-control-sm" required />
+			
+			<label asp-for="taskItem.DueDate"></label>
+			<!-- For that part I asked GPT how to show current date and time by default and prevent selecting a past date -->
+			<input asp-for="taskItem.DueDate"
+				   type="datetime-local"
+				   class="form-control form-control-sm"
+				   required
+				   min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")"
+				   value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+			
+			<label asp-for="taskItem.Status">Select Status</label>
+			<select asp-for="taskItem.Status" class="form-control form-control-sm">
+				<option value="Not started">Pick One</option>
+				<option value="Not started">Not started</option>
+				<option value="In progress">In progress</option>
+			</select>
+			
+			<button class="btn btn-primary btn-sm">Add Task</button>
+		</form>
+		<!-- Result message after adding -->
+		<p>@TempData["AddResult"]</p>
+
+		<!-- Link to display all tasks -->
+		<p>
+			<a href="/Display" class="btn btn-secondary">Display Tasks</a>
+		</p>
+	</div>
+
+	<!-- Right side: Assign and Delete -->
+	<div class="d-flex flex-column gap-3" style="min-width: 300px;">
+
+		<!-- Form to assign user to task -->
+		<h3>Assign Task</h3>
+		<form method="post" asp-page-handler="Assign" class="d-flex flex-column gap-2">
+			<!-- Dropdown with task list -->
+			<label asp-for="taskItem.Id">Select Task</label>
+			<select asp-for="taskItem.Id" asp-items="@(new SelectList(Model.Tasks,"Id","Title"))" class="form-select form-select-sm">
+				<option value="">Pick One</option>
+			</select>
+			<!-- Dropdown with user list -->
+			<label asp-for="user.Id">Select User</label>
+			<select asp-for="user.Id" asp-items="@(new SelectList(Model.Users, "Id", "FullName"))" class="form-select form-select-sm">
+				<option value="">Pick One</option>
+			</select>
+			
+			<button class="btn btn-primary btn-sm">Assign Task</button>
+		</form>
+		<!-- Result message after assigning -->
+		<p>@TempData["AssignResult"]</p>
+
+		<!-- Form to delete task by Id -->
+		<h3>Delete Task</h3>
+		<form method="post" asp-page-handler="Delete" class="d-flex flex-column gap-2">
+			<select asp-for="taskItem.Id" asp-items="@(new SelectList(Model.Tasks,"Id","Title"))" class="form-select form-select-sm">
+				<option value="">Pick One</option>
+			</select>
+
+			<button class="btn btn-primary btn-sm">Delete Task</button>
+		</form>
+		<!-- Result message after deletion -->
+		<p>@TempData["DeleteResult"]</p>
+	</div>
+</div>
+<!-- Back to main menu button -->
+<div class="text-center">
+	<p class="mt-3">
+		<a href="/Index" class="btn btn-outline-primary">Back to Main Menu</a>
+	</p>
+</div> 

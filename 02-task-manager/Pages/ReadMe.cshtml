@@ -1,0 +1,51 @@
+﻿@page
+@model TaskManagerDariaSt.Pages.ReadMeModel
+<h1 class="text-center mb-4">Project Explanation</h1>
+
+<div class="d-flex justify-content-center">
+    <div style="max-width: 700px;" class="d-flex flex-column gap-3">
+
+        <p>
+            In this project I built a Task Manager system based on Razor Pages and MongoDB.
+        </p>
+
+        <p>
+            There are two main entities: <b>Users</b> and <b>Tasks</b>, each connected to its own collection in MongoDB.
+            Tasks can be assigned to existing users, and when a user is deleted, they are also automatically unassigned from all tasks.
+        </p>
+
+        <p>
+            The system allows:<br />
+            ✔ Adding, deleting, and assigning tasks<br />
+            ✔ Filtering tasks by user and status<br />
+            ✔ Updating tasks with pre-loaded data<br />
+            ✔ Adding and deleting users<br />
+            ✔ Displaying tasks in a table with clean Bootstrap design
+        </p>
+
+        <p>
+            I used <b>Dependency Injection</b> to easily access both services (Tasks and Users) inside my Razor Pages. It made the code much simpler, because almost every page uses both services for different tasks.
+        </p>
+        <p>
+            I used <b>TempData</b> for passing success/error messages between requests. I didn't use <b>Session</b> because there wasn't really a need for storing user-specific long-term state.
+        </p>
+        <p>
+            I also used <b>Routing with Id parameter</b> for actions like updating tasks, to dynamically pass the task Id through the URL and load correct data.
+        </p>
+
+        <p>
+            For some specific parts I used ChatGPT. Mostly for:<br />
+            ✔ Bootstrap CSS help<br />
+            ✔ Proper date visualization without showing default values<br />
+            ✔ Improvement of page reload logic after Update (in UpdateTask)<br />
+            ✔ Date restrictions to prevent selecting past dates and automatically showing today's date<br />
+            ✔ Generation clean code comments<br />
+            (all marked in my code)
+        </p>
+
+        <div class="text-center mt-4">
+            <a href="/Index" class="btn btn-outline-primary">Back to Main Menu</a>
+        </div>
+
+    </div>
+</div>

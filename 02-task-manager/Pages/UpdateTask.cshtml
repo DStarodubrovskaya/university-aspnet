@@ -1,0 +1,51 @@
+﻿@page
+@model TaskManagerDariaSt.Pages.UpdateTaskModel
+<h1 class="text-center mb-4">Update Task</h1>
+<!-- Centered form container -->
+<div class="d-flex flex-column align-items-center gap-3">
+	<div style="min-width: 300px; max-width: 400px; width: 100%;">
+
+		<!-- Form to update existing task -->
+		<h3>Update Task</h3>
+		<form method="post" asp-page-handler="Update" class="d-flex flex-column gap-2">
+			<!-- Hidden fields to keep task ID and assignment info -->
+			<input type="hidden" asp-for="taskItem.Id" />
+			<input type="hidden" asp-for="taskItem.AssignedToUserName" />
+			<input type="hidden" asp-for="taskItem.AssignedToUserId" />
+
+			<!-- Task fields for editing -->
+			<label asp-for="taskItem.Title"></label>
+			<input asp-for="taskItem.Title" type="text" class="form-control form-control-sm" required />
+			
+			<label asp-for="taskItem.Description"></label>
+			<input asp-for="taskItem.Description" type="text" class="form-control form-control-sm" required />
+			
+			<label asp-for="taskItem.DueDate"></label>
+			<input asp-for="taskItem.DueDate" type="datetime-local" class="form-control form-control-sm" required />
+			
+			<label asp-for="taskItem.Status">Select Status</label>
+			<select asp-for="taskItem.Status" class="form-control form-control-sm">
+				<option value="Not started">Pick One</option>
+				<option value="Not started">Not started</option>
+				<option value="In progress">In progress</option>
+				<option value="Completed">Completed</option>
+			</select>
+			
+			<button class="btn btn-primary btn-sm">Update Task</button>
+		</form>
+		<!-- Result message after update -->
+		<p>@TempData["UpdateResult"]</p>
+
+		<!-- Quick link to display all tasks -->
+		<p>
+			<a href="/Display" class="btn btn-secondary">Display Tasks</a>
+		</p>
+	</div>
+
+	<!-- Back to main menu button -->
+	<div class="text-center">
+		<p class="mt-3">
+			<a href="/Index" class="btn btn-outline-primary">Back to Main Menu</a>
+		</p>
+	</div>
+</div>

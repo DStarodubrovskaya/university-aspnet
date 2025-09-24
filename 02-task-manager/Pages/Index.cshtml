@@ -1,0 +1,19 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="d-flex flex-column align-items-center justify-content-center mt-5 gap-4">
+
+    <h1 class="display-4 text-center">Welcome to the Task Manager</h1>
+    <h4 class="text-center">What would you like to do?</h4>
+
+    <!-- Quick navigation buttons -->
+    <div class="d-flex flex-column gap-2" style="min-width: 200px;">
+        <a asp-page="/Users" class="btn btn-primary btn-sm">Manage Users</a>
+        <a asp-page="/Tasks" class="btn btn-primary btn-sm">Manage Tasks</a>
+        <a asp-page="/Display" class="btn btn-secondary btn-sm">Display Tasks</a>
+    </div>
+
+</div>
